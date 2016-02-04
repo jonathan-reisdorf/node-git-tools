@@ -232,7 +232,7 @@ Repo.prototype.blame = function( options, callback ) {
 	this.exec.apply( this, args );
 };
 
-Repo.prototype.branches = function( callback ) {
+Repo.prototype.branches = function( callback, listRemote ) {
 	this.exec( "for-each-ref",
 		"--format=" +
 			"%(refname:short)%0a" +
@@ -240,7 +240,7 @@ Repo.prototype.branches = function( callback ) {
 			"%(authoremail) %(authorname)%0a" +
 			"%(subject)%0a" +
 			"%(objectname)%0a",
-		"refs/heads",
+		listRemote ? "refs/remotes" : "refs/heads",
 	function( error, data ) {
 		if ( error ) {
 			return callback( error );
